@@ -1,0 +1,47 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:windows="clr-namespace:App.Windows"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="290" Width="400" Height="290"
+        x:Class="App.Windows.AboutWindow"
+        x:DataType="windows:AboutWindow"
+        Title="AboutWindow" FontSize="12" CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        ExtendClientAreaToDecorationsHint="True"
+        >
+    <Window.Styles>
+        <Style Selector="Button#PART_MinimizeButton, Button#PART_RestoreButton, Button#PART_MinimizeButton, Button#PART_FullScreenButton">
+            <Setter Property="IsVisible" Value="False"/>
+        </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="FontSize" Value="12"></Setter>
+        </Style>
+    </Window.Styles>
+    
+    <Grid ColumnDefinitions="* *" Margin="16">
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+            <Image IsVisible="{Binding IsLightTheme}" Name="WhiteThemeLogo" Source="../Assets/logo.png" Width="80" Margin="6 0 0 10"/>
+            <Image IsVisible="{Binding IsDarkTheme}" Name="DarkThemeLogo" Source="../Assets/logo_inverted.png" Width="80" Margin="6 0 0 10"/>
+            <TextBlock TextAlignment="Center">Siege Control <Run Text="{Binding AssemblyVersion}"/></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <TextBlock>Copyright © 2024</TextBlock>
+            <TextBlock>by Kajetan Krawczyk</TextBlock>
+            <StackPanel Orientation="Horizontal"><avalonia:MaterialIcon Kind="Link" Margin="0 0 6 0"/><HyperlinkButton NavigateUri="https://kaiy.tech/" FontSize="12">https://kaiy.tech/</HyperlinkButton></StackPanel>
+            <TextBlock FontWeight="Bold" Margin="0 16 0 0">Special thanks:</TextBlock>
+            <StackPanel Orientation="Horizontal"><avalonia:MaterialIcon Kind="Link" Margin="0 0 6 0"/><HyperlinkButton NavigateUri="https://github.com/glampert/reverse-engineering-dungeon-siege" FontSize="12">glampert</HyperlinkButton></StackPanel>
+            <TextBlock Margin="24 -6 0 0" TextWrapping="Wrap">For an amazing GitHub repository outlining binary structure of the Tank files</TextBlock>
+            <StackPanel Orientation="Horizontal"><avalonia:MaterialIcon Kind="Link" Margin="0 0 6 0"/><HyperlinkButton NavigateUri="https://www.siegetheday.org/?q=node/3044" FontSize="12">Dan Strendberg</HyperlinkButton></StackPanel>
+            <TextBlock Margin="24 -6 0 0" TextWrapping="Wrap">For the original Tank Viewer app</TextBlock>
+            <StackPanel Orientation="Horizontal" Margin="0 16 0 0">
+                <TextBlock>Built with</TextBlock>  <avalonia:MaterialIcon Kind="Heart" Foreground="IndianRed" Margin="4 -8 4 0"/> <TextBlock>using </TextBlock>
+                <HyperlinkButton Margin="2 -7.5 0 0" NavigateUri="https://avaloniaui.net/" FontSize="12">Avalonia UI</HyperlinkButton>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

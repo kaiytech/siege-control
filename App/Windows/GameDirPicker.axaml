@@ -1,0 +1,54 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="270"
+        Width="500" Height="270"
+        x:Class="App.Windows.GameDirPicker"
+        Title="Game dir picker" CanResize="False"
+        WindowStartupLocation="CenterOwner" ExtendClientAreaToDecorationsHint="True">
+    <Window.Styles>
+        <Style Selector="Button#PART_MinimizeButton, Button#PART_RestoreButton, Button#PART_MinimizeButton, Button#PART_FullScreenButton">
+            <Setter Property="IsVisible" Value="False"/>
+        </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="FontSize" Value="12"></Setter>
+        </Style>
+    </Window.Styles>
+    <Grid RowDefinitions="Auto Auto * Auto" Margin="12">
+        <TextBlock IsHitTestVisible="False" Margin="0 -4 0 10" TextAlignment="Left" VerticalAlignment="Center" FontWeight="Bold">Siege Control</TextBlock>
+        <TextBlock TextWrapping="Wrap" Grid.Row="1">Welcome to Siege Control! Please point to your game directories first.</TextBlock>
+        <Border Grid.Row="2" Theme="{StaticResource CardBorder}" Padding="10">
+            <StackPanel Orientation="Vertical">
+                <Grid ColumnDefinitions="Auto Auto Auto">
+                    <Image Source="/Assets/ds1.ico" Width="20"/>
+                    <TextBlock VerticalAlignment="Center" Margin="6 0" Grid.Column="1">Dungeon Siege 1</TextBlock>
+                    <avalonia:MaterialIcon Name="Ds1Tick" Grid.Column="2" HorizontalAlignment="Left" Kind="Check"/>
+                </Grid>
+                <Grid ColumnDefinitions="* Auto" Margin="0 10">
+                    <TextBox TextChanged="Ds1TextBox_OnTextChanged" Name="Ds1TextBox"/>
+                    <Button Name="Ds1BrowseButton" Click="Ds1BrowseButton_OnClick" Margin="6 0 0 0" Grid.Column="1">Browse</Button>
+                </Grid>
+                <Grid ColumnDefinitions="Auto Auto Auto" >
+                    <Image  Source="/Assets/ds2.ico" Width="20"/>
+                    <TextBlock VerticalAlignment="Center" Margin="6 0" Grid.Column="1">Dungeon Siege 2</TextBlock>
+                    <avalonia:MaterialIcon Name="Ds2Tick" Grid.Column="2" HorizontalAlignment="Left" Kind="WindowClose" Foreground="Red"/>
+                </Grid>
+                <Grid ColumnDefinitions="* Auto" Margin="0 10">
+                    <TextBox TextChanged="Ds2TextBox_OnTextChanged" Name="Ds2TextBox"/>
+                    <Button Name="Ds2BrowseButton" Click="Ds2BrowseButton_OnClick" Margin="6 0 0 0" Grid.Column="1">Browse</Button>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="3" ColumnDefinitions="* Auto">
+            <CheckBox FontSize="12" Grid.Column="0" VerticalAlignment="Center" Content="Don't show this again">
+                <ToolTip.Tip>These settings can be adjusted from the Preferences window later on.</ToolTip.Tip>
+            </CheckBox>
+            <Button Name="ContinueButton" Margin="0 8 0 0" Grid.Column="2" HorizontalAlignment="Right">Continue</Button>
+        </Grid>
+    </Grid>
+</Window>

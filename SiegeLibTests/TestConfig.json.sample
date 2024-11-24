@@ -1,0 +1,13 @@
+﻿{
+  "#": "Root directory of your Dungeon Siege 1 installation",
+  "ds1_path": "",
+  
+  "#": "Root directory of your Dungeon Siege 1 documents folder (where DungeonSiege.ini is)",
+  "ds1_user_path": "",
+
+  "#": "Root directory of your Dungeon Siege 2 installation",
+  "ds2_path": "",
+
+  "#": "Root directory of your Dungeon Siege 2 documents folder (where DungeonSiege2.ini is)",
+  "ds2_user_path": ""
+}

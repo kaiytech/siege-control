@@ -1,0 +1,142 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        xmlns:windows="clr-namespace:App.Windows"
+        xmlns:utils="clr-namespace:App.Utils"
+        xmlns:System="clr-namespace:System;assembly=System.Runtime"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:DataType="windows:MainWindow"
+        Width="1000" Height="600"
+        x:Class="App.Windows.MainWindow"
+        Title="Siege Control" Name="ThisWindow" CanResize="True"
+        WindowStartupLocation="CenterOwner" ExtendClientAreaToDecorationsHint="True" FontSize="12"
+        Closing="Window_OnClosing" Icon="../Assets/icon.ico">
+    <Window.Styles>
+        <Style Selector="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="FontSize" Value="12"></Setter>
+        </Style>
+        <Style Selector="DataGridCell:current /template/ Rectangle#CurrencyVisual"> 
+            <Setter Property="Opacity" Value="0" /> 
+        </Style> 
+    </Window.Styles>
+    
+    <Grid RowDefinitions="Auto Auto *" Margin="12">
+        <StackPanel Orientation="Horizontal">
+            <Image IsVisible="{Binding IsLightTheme}" Name="WhiteThemeLogo" Source="../Assets/logo.png" Width="12" Margin="6 0 0 10"/>
+            <Image IsVisible="{Binding IsDarkTheme}" Name="DarkThemeLogo" Source="../Assets/logo_inverted.png" Width="12" Margin="6 0 0 10"/>
+            <TextBlock IsHitTestVisible="False" Margin="10 0 0 10" TextAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Text="{Binding #ThisWindow.Title}"></TextBlock>
+        </StackPanel>
+        <Border Theme="{StaticResource CardBorder}" Grid.Row="1" Padding="0">
+            <Grid ColumnDefinitions="Auto *">
+                <Menu>
+                    <MenuItem SubmenuOpened="FileMenuItem_OnSubmenuOpened" Background="Transparent" Header="File" Name="FileMenuItem">
+                        <MenuItem Header="Open" HotKey="Ctrl+O" InputGesture="Ctrl+O" Name="OpenMenuItem" Command="{Binding OpenTankWithFilePicker}"/>
+                        <MenuItem Header="Reopen" Name="RecentFilesMenuItem">
+                        
+                        </MenuItem>
+                        <Separator/>
+                        <MenuItem Name="CloseMenuItem" Header="Close" HotKey="Ctrl+F4" InputGesture="Ctrl+F4" Command="{Binding CloseCurrentTank}"/>
+                        <MenuItem Name="CloseAllMenuItem" Header="Close All" Command="{Binding CloseAllTanks}"/>
+                        <Separator/>
+                        <MenuItem Header="Exit" HotKey="Alt+F4" InputGesture="Alt+F4" Command="{Binding Close}"/>
+                    </MenuItem>
+                    <MenuItem Background="Transparent" Header="Actions" Name="ActionsMenuItem" SubmenuOpened="ActionsMenuItem_OnSubmenuOpened">
+                        <MenuItem Header="Extract" HotKey="Shift+E" InputGesture="Shift+E" Name="ExtractMenuItem" Command="{Binding ExtractSelectedFiles}"/>
+                        <MenuItem Header="View" HotKey="Shift+V" InputGesture="Shift+V" Name="ViewMenuItem" Command="{Binding ViewSelectedFile}"/>
+                        <Separator Tag="Exclusive"/>
+                        <MenuItem Tag="Exclusive" Header="Tank Info" HotKey="F1" InputGesture="F1" Name="TankInfoMenuItem" Command="{Binding ShowTankInfo}"/>
+                        <Separator/>
+                        <MenuItem Header="Select All" HotKey="Ctrl+A" InputGesture="Ctrl+A" Name="SelectAllMenuItem" Command="{Binding SelectAllFiles}"/>
+                        <MenuItem Header="Invert Selection" HotKey="Shift+Ctrl+I" InputGesture="Shift+Ctrl+I" Name="InvertSelectionMenuItem" Command="{Binding InvertSelection}"/>
+                        <Separator/>
+                        <MenuItem Name="GoUpMenuItem" Header="One directory up" HotKey="Alt+Up" InputGesture="Alt+Up" Command="{Binding GoUpOneDirectory}"/>
+                        <MenuItem Name="GoBackMenuItem" Header="Previous directory" HotKey="Back" InputGesture="Back" Command="{Binding GoBackOneDirectory}"/>
+                    </MenuItem>
+                    <MenuItem Background="Transparent" Header="View" Name="ViewMenuHeadItem" SubmenuOpened="ViewMenuHeadItem_OnSubmenuOpened">
+                        <MenuItem HotKey="F4" InputGesture="F4" Command="{Binding ToggleTreeView}">
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <avalonia:MaterialIcon Name="FolderTreeViewIcon" Kind="CheckBox" Margin="-8 0 8 0"/>
+                                    <TextBlock>Folder Tree</TextBlock>
+                                </StackPanel>
+                            </MenuItem.Header> 
+                        </MenuItem>
+                        <MenuItem HotKey="F5" InputGesture="F5" Command="{Binding ToggleTheme}">
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <avalonia:MaterialIcon Name="ToggleThemeIcon" Kind="CheckBox" Margin="-8 0 8 0"/>
+                                    <TextBlock>Switch theme</TextBlock>
+                                </StackPanel>
+                            </MenuItem.Header> 
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Background="Transparent" Header="Help">
+                        <MenuItem Header="About" Command="{Binding OpenAboutWindow}"/>
+                    </MenuItem>
+                </Menu>
+                <TextBox Foreground="Gray" Padding="10 4 0 0" FontSize="12" FontFamily="Courier New" Name="CurrentPathTextBox" Grid.Column="1" CornerRadius="0 0 0 0" Focusable="False" IsReadOnly="True" Background="Transparent"
+                         Text=""/>
+            </Grid>
+        </Border>
+        
+        <Grid Grid.Row="2" ColumnDefinitions="200 Auto *" Name="AppGrid">
+            <Grid RowDefinitions="* Auto" Name="TreeViewGrid">
+                <Border Padding="0 10 0 0" Theme="{StaticResource CardBorder}" Grid.Column="0">
+                    <TreeView Name="TanksTreeView" SelectionChanged="TanksTreeView_OnSelectionChanged"/>
+                </Border>
+                <StackPanel Name="NoOpenTanksNotification" Orientation="Vertical" VerticalAlignment="Center">
+                    <TextBlock TextAlignment="Center">No tank files are open</TextBlock>
+                    <Button Name="QuickOpenButton" Command="{Binding OpenTankWithFilePicker}" Margin="8" FontWeight="Normal">Open</Button>
+                </StackPanel>
+                <Border Name="MediaCard" IsVisible="False" Grid.Row="1" Theme="{StaticResource CardBorder}" Padding="5">
+                    <Grid ColumnDefinitions="* Auto">
+                        <SelectableTextBlock FontFamily="Courier New" Name="MediaName" TextWrapping="Wrap">media_name.wav amdmsa dmsamd samd masd mas</SelectableTextBlock>
+                        <Button Name="MediaControlButton" Click="MediaControlButton_OnClick" Grid.Column="1"><avalonia:MaterialIcon Name="MediaControlIcon" Kind="Stop"/></Button>
+                    </Grid>
+                </Border>
+            </Grid>
+            <GridSplitter Opacity="0.3" Name="MainGridSplitter" Grid.Column="1" Margin="0 10"></GridSplitter>
+            <Grid Grid.Column="2" RowDefinitions="* Auto">
+                <Border Grid.Row="0" Padding="10" Theme="{StaticResource CardBorder}">
+                    <DataGrid CellPointerPressed="FilesDataGridOnCellPointerPressed" Name="FilesDataGrid" IsReadOnly="True" SelectionChanged="FilesDataGrid_OnSelectionChanged" ItemsSource="{Binding Files}">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate DataType="utils:ListEntry">
+                                        <avalonia:MaterialIcon Kind="{Binding Icon}"></avalonia:MaterialIcon>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+                            <DataGridTextColumn Header="Size" Binding="{Binding Size}"/>
+                            <DataGridTextColumn Header="Last Modified" Binding="{Binding LastModified}"/>
+                            <DataGridTextColumn Header="Ratio" Binding="{Binding Ratio}"/>
+                            <DataGridTextColumn Header="Format" Binding="{Binding Format}"/>
+                            <DataGridTextColumn Header="CRC" Binding="{Binding Crc32}"/>
+                        </DataGrid.Columns>
+                        
+                    </DataGrid>
+                </Border>
+                <Border IsVisible="False" Name="ExtractingPanel" Padding="10" Grid.Row="1" Theme="{StaticResource CardBorder}">
+                    <Grid ColumnDefinitions="Auto * Auto">
+                        <TextBlock>Extracting...</TextBlock>
+                        <ProgressBar Name="ExtractingProgressBar" Margin="10 0" Grid.Column="1" IsIndeterminate="False"></ProgressBar>
+                        <Button Name="ExtractCancelButton" Click="ExtractCancelButton_OnClick" FontWeight="Normal" Margin="0 -10 -8 -10" Grid.Column="2">Cancel</Button>
+                    </Grid>
+                </Border>
+                <Border IsVisible="False" Name="OpeningPanel" Padding="10" Grid.Row="1" Theme="{StaticResource CardBorder}">
+                    <Grid ColumnDefinitions="Auto *">
+                        <TextBlock>Opening <Run Name="TankName">Tank.dsres</Run>...</TextBlock>
+                        <ProgressBar Margin="10 0" Grid.Column="1" IsIndeterminate="True"></ProgressBar>
+                    </Grid>
+                </Border>
+            </Grid> 
+        </Grid>
+    </Grid>
+</Window>

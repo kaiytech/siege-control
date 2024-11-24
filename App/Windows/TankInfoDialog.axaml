@@ -1,0 +1,38 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:windows="clr-namespace:App.Windows"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="240"
+        Width="500" Height="500"
+        x:Class="App.Windows.TankInfoDialog"
+        Title="TankInfoDialog" CanResize="True"
+        WindowStartupLocation="CenterOwner" ExtendClientAreaToDecorationsHint="True"
+        FontSize="12" FontFamily="Courier New" KeyDown="InputElement_OnKeyDown"
+        x:DataType="windows:TankInfoDialog">
+    <Window.Styles>
+        <Style Selector="Button#PART_MinimizeButton, Button#PART_RestoreButton, Button#PART_MinimizeButton, Button#PART_FullScreenButton">
+            <Setter Property="IsVisible" Value="False"/>
+        </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="FontSize" Value="12"></Setter>
+        </Style>
+    </Window.Styles>
+    <StackPanel Margin="8">
+        <ItemsControl ItemsSource="{Binding Items }">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="* *">
+                        <SelectableTextBlock Grid.Column="0" Text="{Binding Property}"/>
+                        <SelectableTextBlock Grid.Column="1" Text="{Binding Value}"
+                                             TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Top"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+    
+</Window>

@@ -1,0 +1,35 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="140" Width="400" Height="140"
+        x:Class="App.Windows.ExtractDialog"
+        Title="ExtractDialog"
+        WindowStartupLocation="CenterOwner"
+        ExtendClientAreaToDecorationsHint="True" FontSize="12" 
+        CanResize="True" KeyDown="InputElement_OnKeyDown" Focusable="True" Opened="TopLevel_OnOpened">
+    <Window.Styles>
+        <Style Selector="Button#PART_MinimizeButton, Button#PART_RestoreButton, Button#PART_MinimizeButton, Button#PART_FullScreenButton">
+            <Setter Property="IsVisible" Value="False"/>
+        </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="FontSize" Value="12"></Setter>
+        </Style>
+    </Window.Styles>
+    <StackPanel Orientation="Vertical" Margin="8" Name="MainStackPanel">
+        <TextBlock>Where would you like to extract <Run Name="ExtractName" FontStyle="Italic">this</Run>?</TextBlock>
+        <Grid Grid.Row="1" Margin="0 8" ColumnDefinitions="* Auto">
+            <TextBox TextChanged="DirectoryTextBox_OnTextChanged" Name="DirectoryTextBox" Grid.Column="0"/>
+            <Button Name="PickerButton" Click="PickerButton_OnClick" Height="{Binding #DirectoryTextBox.Bounds.Height}" Grid.Column="1" FontWeight="Normal" Margin="8 0 0 0">Browse</Button>
+        </Grid>
+        <CheckBox Name="HierarchyCheckbox" Margin="0 -8 0 0" FontSize="12" Content="Maintain folder hierarchy">
+            <ToolTip.Tip>
+                When enabled, all files will be extracted to a corresponding directory in the hierarchy.
+            </ToolTip.Tip>
+        </CheckBox>
+       <Button FontWeight="Normal" IsEnabled="False" Name="ExtractButton" Click="ExtractButton_OnClick" Width="{Binding #MainStackPanel.Bounds.Width}">Extract</Button>
+    </StackPanel>
+</Window>
