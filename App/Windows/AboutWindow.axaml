@@ -34,7 +34,7 @@
             <TextBlock>by Kajetan Krawczyk</TextBlock>
             <StackPanel Orientation="Horizontal"><avalonia:MaterialIcon Kind="Link" Margin="0 0 6 0"/><HyperlinkButton NavigateUri="https://kaiy.tech/" FontSize="12">https://kaiy.tech/</HyperlinkButton></StackPanel>
             <TextBlock FontWeight="Bold" Margin="0 16 0 0">Special thanks:</TextBlock>
-            <StackPanel Orientation="Horizontal"><avalonia:MaterialIcon Kind="Link" Margin="0 0 6 0"/><HyperlinkButton NavigateUri="https://github.com/glampert/reverse-engineering-dungeon-siege" FontSize="12">glampert</HyperlinkButton></StackPanel>
+            <StackPanel Orientation="Horizontal"><avalonia:MaterialIcon Kind="Link" Margin="0 0 6 0"/><HyperlinkButton NavigateUri="https://github.com/glampert/reverse-engineering-dungeon-siege" FontSize="12">Guilherme Lampert</HyperlinkButton></StackPanel>
             <TextBlock Margin="24 -6 0 0" TextWrapping="Wrap">For an amazing GitHub repository outlining binary structure of the Tank files</TextBlock>
             <StackPanel Orientation="Horizontal"><avalonia:MaterialIcon Kind="Link" Margin="0 0 6 0"/><HyperlinkButton NavigateUri="https://www.siegetheday.org/?q=node/3044" FontSize="12">Dan Strendberg</HyperlinkButton></StackPanel>
             <TextBlock Margin="24 -6 0 0" TextWrapping="Wrap">For the original Tank Viewer app</TextBlock>
