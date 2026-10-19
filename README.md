@@ -7,7 +7,7 @@
   </p>
 </div>
 
-[Human-Made](https://img.shields.io/badge/made%20by-a%20human-blue?style=flat-square)
+![Human-Made](https://img.shields.io/badge/made%20by-a%20human-blue?style=flat-square)
 
 ## About The Project
 Siege Control has been created based on Dan Strandberg's [Tank Viewer](https://www.siegetheday.org/?q=node/3044) and Guilherme Lampert's [Dungeon Siege Reverse Engineering project](https://github.com/glampert/reverse-engineering-dungeon-siege). Because the Tank extraction tools are old and non open-source, I decided to port basic functionality of Tank Viewer as a standalone [Avalonia UI](https://avaloniaui.net/) app.
